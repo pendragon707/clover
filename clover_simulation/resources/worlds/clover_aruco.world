@@ -11,7 +11,7 @@
     </include>
 
     <include>
-      <uri>model://aruco_cmit_txt</uri>
+      <uri>model://aruco_7x7</uri>
     </include>
 
     <scene>
@@ -43,5 +43,35 @@
       <real_time_update_rate>250</real_time_update_rate>
       <magnetic_field>6.0e-6 2.3e-5 -4.2e-5</magnetic_field>
     </physics>
+
+    <model name="vertical_wall">
+      <static>true</static>
+      <link name="link">
+        <collision name="collision">
+          <geometry>
+            <!-- Wall dimensions: length x thickness x height -->
+            <box>
+              <size>7 0.2 2</size>
+            </box>
+          </geometry>
+        </collision>
+        <visual name="visual">
+          <geometry>
+            <box>
+              <size>7 0.2 2</size>
+            </box>
+          </geometry>
+          <material>
+            <ambient>0.5 0.5 0.5 1</ambient>
+            <diffuse>0.7 0.7 0.7 1</diffuse>
+            <specular>0.8 0.8 0.8 1</specular>
+          </material>
+        </visual>
+      </link>
+      <!-- Set wall position (x, y, z) -->
+      <pose>3 7 1 0 0 0</pose> <!-- 2 meters in Y direction, centered in Z -->
+    </model>
+
+
   </world>
 </sdf>

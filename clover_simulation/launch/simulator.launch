@@ -94,15 +94,61 @@
     <param name="use_sim_time" value="false" if="$(eval type == 'jmavsim')"/>
 
     <!-- Clover services -->
-    <include file="$(find clover)/launch/clover.launch">
-        <arg name="simulator" value="true"/>
-        <arg name="fcu_conn" value="sitl"/>
-        <arg name="fcu_ip" value="127.0.0.1"/>
-        <arg name="gcs_bridge" value=""/>
-        <arg name="web_video_server" default="false" if="$(eval type == 'jmavsim')"/>
-        <arg name="main_camera" default="false" if="$(eval type == 'jmavsim')"/>
-        <arg name="aruco" default="false" if="$(eval type == 'jmavsim')"/>
-        <arg name="optical_flow" default="false" if="$(eval type == 'jmavsim')"/>
-        <arg name="led" default="false" if="$(eval type == 'jmavsim')"/>
-    </include>
+    <group ns="drone1">
+        <include file="$(find clover)/launch/clover.launch">
+            <arg name="simulator" value="true"/>
+            <arg name="fcu_conn" value="sitl"/>
+            <arg name="fcu_ip" value="127.0.0.1"/>
+            <arg name="gcs_bridge" value=""/>
+            <arg name="web_video_server" default="false" if="$(eval type == 'jmavsim')"/>
+            <arg name="main_camera" default="false" if="$(eval type == 'jmavsim')"/>
+            <arg name="aruco" default="false" if="$(eval type == 'jmavsim')"/>
+            <arg name="optical_flow" default="false" if="$(eval type == 'jmavsim')"/>
+            <arg name="led" default="false" if="$(eval type == 'jmavsim')"/>
+        </include>
+    </group>
+
+    <group ns="drone2">
+        <include file="$(find clover)/launch/clover.launch">
+            <arg name="simulator" value="true"/>
+            <arg name="fcu_conn" value="sitl"/>
+            <arg name="fcu_ip" value="127.0.0.1"/>
+            <arg name="gcs_bridge" value=""/>
+            <arg name="web_video_server" default="false" if="$(eval type == 'jmavsim')"/>
+            <arg name="main_camera" default="false" if="$(eval type == 'jmavsim')"/>
+            <arg name="aruco" default="false" if="$(eval type == 'jmavsim')"/>
+            <arg name="optical_flow" default="false" if="$(eval type == 'jmavsim')"/>
+            <arg name="led" default="false" if="$(eval type == 'jmavsim')"/>
+        </include>
+    </group>
+
+    <group ns="drone3">
+        <include file="$(find clover)/launch/clover.launch">
+            <arg name="simulator" value="true"/>
+            <arg name="fcu_conn" value="sitl"/>
+            <arg name="fcu_ip" value="127.0.0.1"/>
+            <arg name="gcs_bridge" value=""/>
+            <arg name="web_video_server" default="false" if="$(eval type == 'jmavsim')"/>
+            <arg name="main_camera" default="false" if="$(eval type == 'jmavsim')"/>
+            <arg name="aruco" default="false" if="$(eval type == 'jmavsim')"/>
+            <arg name="optical_flow" default="false" if="$(eval type == 'jmavsim')"/>
+            <arg name="led" default="false" if="$(eval type == 'jmavsim')"/>
+        </include>
+    </group>
+
+    <group ns="drone4">
+        <include file="$(find clover)/launch/clover.launch">
+            <arg name="simulator" value="true"/>
+            <arg name="fcu_conn" value="sitl"/>
+            <arg name="fcu_ip" value="127.0.0.1"/>
+            <arg name="gcs_bridge" value=""/>
+            <arg name="web_video_server" default="false" if="$(eval type == 'jmavsim')"/>
+            <arg name="main_camera" default="false" if="$(eval type == 'jmavsim')"/>
+            <arg name="aruco" default="false" if="$(eval type == 'jmavsim')"/>
+            <arg name="optical_flow" default="false" if="$(eval type == 'jmavsim')"/>
+            <arg name="led" default="false" if="$(eval type == 'jmavsim')"/>
+        </include>
+    </group>
+
+
 </launch>

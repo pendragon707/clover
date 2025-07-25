@@ -1,0 +1,74 @@
+<?xml version="1.0"?>
+
+<launch>
+    <!-- launches Gazebo environment and 2x: MAVROS, PX4 SITL, and spawns vehicle -->
+    <!-- vehicle model and world -->
+    <arg name="est" default="lpe"/>
+    <arg name="world" default="$(find clover_simulation)/resources/worlds/clover_aruco.world"/>
+    <!-- gazebo configs -->
+    <arg name="gui" default="true"/>
+    <arg name="debug" default="false"/>
+    <arg name="verbose" default="false"/>
+    <arg name="paused" default="false"/>
+
+    <!-- log formatting -->
+    <env name="ROSCONSOLE_FORMAT" value="[${severity}] [${time}]: ${logger}: ${message}"/>
+
+
+    <!-- Gazebo instance -->
+    <include file="$(find gazebo_ros)/launch/empty_world.launch" if="$(eval type == 'gazebo')">
+        <!-- Workaround for crashes in VMware -->
+        <env name="SVGA_VGPU10" value="0"/>
+        <arg name="gui" value="$(arg gui)"/>
+        <arg name="world_name" value="$(find clover_simulation)/resources/worlds/clover_aruco.world"/>
+        <arg name="verbose" value="true"/>
+    </include>
+
+    <!-- UAV0 -->
+    <include file="$(find clover_simulation)/launch/clover_simulated.launch">
+        <arg name="ID" value="0"/>
+        <arg name="x" value="0"/>
+        <arg name="y" value="0"/>
+        <arg name="z" value="0.3"/>
+        <arg name="R" value="0"/>
+        <arg name="P" value="0"/>
+        <arg name="Y" value="0"/>
+    </include>
+    
+    <!-- UAV1 -->
+    <include file="$(find clover_simulation)/launch/clover_simulated.launch">
+        <arg name="ID" value="1"/>
+        <arg name="x" value="0"/>
+        <arg name="y" value="1"/>
+        <arg name="z" value="0.3"/>
+        <arg name="R" value="0"/>
+        <arg name="P" value="0"/>
+        <arg name="Y" value="0"/>
+    </include>
+
+    <!-- UAV2 -->
+    <include file="$(find clover_simulation)/launch/clover_simulated.launch">
+        <arg name="ID" value="2"/>
+        <arg name="x" value="0"/>
+        <arg name="y" value="2"/>
+        <arg name="z" value="0.3"/>
+        <arg name="R" value="0"/>
+        <arg name="P" value="0"/>
+        <arg name="Y" value="0"/>
+    </include>
+
+    <!-- UAV3 -->
+    <include file="$(find clover_simulation)/launch/clover_simulated.launch">
+        <arg name="ID" value="3"/>
+        <arg name="x" value="0"/>
+        <arg name="y" value="3"/>
+        <arg name="z" value="0.3"/>
+        <arg name="R" value="0"/>
+        <arg name="P" value="0"/>
+        <arg name="Y" value="0"/>
+    </include>
+
+    <!-- swarm checker node -->
+    <!-- <node pkg="swarm_checker" name="swarm_checker" type="swarm_checker_node.py" output="screen"/> -->
+
+</launch>

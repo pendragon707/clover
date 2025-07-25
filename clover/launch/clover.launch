@@ -14,6 +14,8 @@
     <arg name="rc" default="false"/>
     <arg name="force_init" default="true"/> <!-- force estimator to init by publishing zero pose -->
 
+    <arg name="ID" default="0"/>
+
     <arg name="simulator" default="false"/> <!-- flag that we are operating on a simulated drone -->
 
     <!-- log formatting -->
@@ -21,6 +23,8 @@
 
     <!-- mavros -->
     <include file="$(find clover)/launch/mavros.launch">
+        <arg name="ID" value="$(arg ID)"/> 
+
         <arg name="fcu_conn" value="$(arg fcu_conn)"/>
         <arg name="fcu_ip" value="$(arg fcu_ip)"/>
         <arg name="fcu_sys_id" value="$(arg fcu_sys_id)"/>

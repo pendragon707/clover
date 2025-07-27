@@ -17,7 +17,9 @@
     <arg name="local" value="$(eval 14580 + arg('ID'))" if="$(eval fcu_conn == 'sitl')"/>
     <arg name="local" value="$(eval 14540 + arg('ID'))" if="$(eval fcu_conn == 'hitl')"/>
 
-    <arg name="fcu_sys_id_id" value="$(eval arg('fcu_sys_id') + arg('ID'))"/>
+    <arg name="gcs_url_local" value="$(eval 5760 + arg('ID'))" if="$(eval gcs_bridge == 'tcp')"/>
+
+    <arg name="fcu_sys_id_local" value="$(eval arg('fcu_sys_id') + arg('ID'))"/>
 
     <node pkg="mavros" type="mavros_node" name="mavros" launch-prefix="$(arg prefix)" required="false" clear_params="true" respawn="$(arg respawn)" unless="$(eval fcu_conn == 'none')" respawn_delay="1" output="screen">
         <!-- UART connection -->
@@ -32,8 +34,8 @@
         <param name="fcu_url" value="udp://@$(arg fcu_ip):$(arg local)" if="$(eval fcu_conn == 'udp')"/>
 
         <!-- sitl since PX4 1.9.0 -->
-        <param name="fcu_url" value="udp://@$(arg fcu_ip):14580" if="$(eval fcu_conn == 'sitl')"/>
-        <!-- <param name="fcu_url" value="udp://@$(arg fcu_ip):$(arg local)" if="$(eval fcu_conn == 'sitl')"/> -->
+        <!-- <param name="fcu_url" value="udp://@$(arg fcu_ip):14580" if="$(eval fcu_conn == 'sitl')"/> -->
+        <param name="fcu_url" value="udp://@$(arg fcu_ip):$(arg local)" if="$(eval fcu_conn == 'sitl')"/>
 
         <!-- hitl connection (to gazebo_mavlink_interface plugin) -->
         <!-- <param name="fcu_url" value="udp://$(arg fcu_ip):14540@" if="$(eval fcu_conn == 'hitl')"/> -->
@@ -41,10 +43,11 @@
 
         <!-- set target_system_id -->
         <!-- <param name="target_system_id" value="$(arg fcu_sys_id)" /> -->
-        <param name="target_system_id" value="$(arg fcu_sys_id)"/>
+        <param name="target_system_id" value="$(arg fcu_sys_id_local)"/>
 
         <!-- gcs bridge -->
-        <param name="gcs_url" value="tcp-l://0.0.0.0:5760" if="$(eval gcs_bridge == 'tcp')"/>
+        <!-- <param name="gcs_url" value="tcp-l://0.0.0.0:5760" if="$(eval gcs_bridge == 'tcp')"/> -->
+        <param name="gcs_url" value="tcp-l://0.0.0.0:$(arg gcs_url_local)" if="$(eval gcs_bridge == 'tcp')"/>
         <param name="gcs_url" value="udp://0.0.0.0:14550@14550" if="$(eval gcs_bridge == 'udp')"/>
         <param name="gcs_url" value="udp-b://$(env ROS_HOSTNAME):14550@14550" if="$(eval gcs_bridge == 'udp-b')"/>
         <param name="gcs_url" value="udp-pb://$(env ROS_HOSTNAME):14550@14550" if="$(eval gcs_bridge == 'udp-pb')"/>

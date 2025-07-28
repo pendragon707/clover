@@ -12,7 +12,8 @@ rospy.init_node('flight')
 def make_proxy(namespace, service_name, service_type):
     return rospy.ServiceProxy(f'{namespace}/{service_name}', service_type)
 
-drones = ['drone1', 'drone2', 'drone3', 'drone4']
+# drones = ['drone1', 'drone2', 'drone3', 'drone4']
+drones = ['clover0', 'clover1', 'clover2', 'clover3']
 
 get_telemetry = {}
 navigate = {}
@@ -30,17 +31,6 @@ for drone in drones:
     set_effect[drone] = make_proxy(drone, 'led/set_effect', SetLEDEffect)
     set_position[drone] = make_proxy(drone, 'set_position', srv.SetPosition)
     set_velocity[drone] = make_proxy(drone, 'set_velocity', srv.SetVelocity)
-
-# get_telemetry[drone] = rospy.ServiceProxy('get_telemetry', srv.GetTelemetry)
-# navigate = rospy.ServiceProxy('navigate', srv.Navigate)
-# navigate_global = rospy.ServiceProxy('navigate_global', srv.NavigateGlobal)
-# set_position = rospy.ServiceProxy('set_position', srv.SetPosition)
-# set_velocity = rospy.ServiceProxy('set_velocity', srv.SetVelocity)
-# set_attitude = rospy.ServiceProxy('set_attitude', srv.SetAttitude)
-# set_rates = rospy.ServiceProxy('set_rates', srv.SetRates)
-# set_effect = rospy.ServiceProxy('led/set_effect', SetLEDEffect)
-# land = rospy.ServiceProxy('land', Trigger)
-# arming = rospy.ServiceProxy('mavros/cmd/arming', CommandBool)
 
 def takeoff_wait(drone="drone1", z=1):
    # navigate[drone](z=z, frame_id='body', auto_arm=True)

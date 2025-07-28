@@ -1,7 +1,6 @@
 <launch>
     <arg name="type" default="gazebo"/> <!-- gazebo, jmavsim, none (only clover packages) -->
-    <arg name="mav_id" default="0"/>
-    <arg name="est" default="ekf2"/> <!-- PX4 estimator: lpe, ekf2 -->
+    <arg name="est" default="lpe"/> <!-- PX4 estimator: lpe, ekf2 -->
     <arg name="vehicle" default="clover"/> <!-- PX4 vehicle configuration: clover, clover_vpe -->
     <arg name="main_camera" default="true"/> <!-- Simulated vision position estimation camera (optical flow, ArUco) -->
     <arg name="maintain_camera_rate" default="false"/> <!-- Slow simulation down to maintain camera rate -->
@@ -29,8 +28,8 @@
     <!-- UAV0 -->
     <include file="$(find clover_simulation)/launch/clover_simulated.launch">
         <arg name="ID" value="0"/>
-        <arg name="x" value="0"/>
-        <arg name="y" value="0"/>
+        <arg name="x" value="3"/>
+        <arg name="y" value="3"/>
         <arg name="z" value="0.3"/>
         <arg name="R" value="0"/>
         <arg name="P" value="0"/>
@@ -40,8 +39,8 @@
     <!-- UAV1 -->
     <include file="$(find clover_simulation)/launch/clover_simulated.launch">
         <arg name="ID" value="1"/>
-        <arg name="x" value="0"/>
-        <arg name="y" value="1"/>
+        <arg name="x" value="3"/>
+        <arg name="y" value="4"/>
         <arg name="z" value="0.3"/>
         <arg name="R" value="0"/>
         <arg name="P" value="0"/>
@@ -51,8 +50,8 @@
     <!-- UAV2 -->
     <include file="$(find clover_simulation)/launch/clover_simulated.launch">
         <arg name="ID" value="2"/>
-        <arg name="x" value="0"/>
-        <arg name="y" value="2"/>
+        <arg name="x" value="4"/>
+        <arg name="y" value="3"/>
         <arg name="z" value="0.3"/>
         <arg name="R" value="0"/>
         <arg name="P" value="0"/>
@@ -62,8 +61,8 @@
     <!-- UAV3 -->
     <include file="$(find clover_simulation)/launch/clover_simulated.launch">
         <arg name="ID" value="3"/>
-        <arg name="x" value="0"/>
-        <arg name="y" value="3"/>
+        <arg name="x" value="4"/>
+        <arg name="y" value="4"/>
         <arg name="z" value="0.3"/>
         <arg name="R" value="0"/>
         <arg name="P" value="0"/>

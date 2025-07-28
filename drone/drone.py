@@ -1,8 +1,8 @@
-# from services import FlightServices, LedServices
-import flight
+from swarm import SingleClover
 
 def drone():
-    pass
+    clover = SingleClover("clover0", 0)
+    clover.navigateWait(z=1, auto_arm=True)
 
 if __name__ == "__main__":
     drone()

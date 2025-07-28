@@ -1,0 +1,76 @@
+import rospy
+import mavros_msgs
+from mavros_msgs import srv
+from mavros_msgs.srv import SetMode, CommandBool, SetModeRequest
+from geometry_msgs.msg import PoseStamped
+from mavros_msgs.msg import State
+import time
+
+current_state = State()
+# current state recebe a mensagem de callback
+def state_cb(msg_cb):
+    current_state = msg_cb
+
+rospy.init_node("XABLAU_NO_TAKEOFF", anonymous=True)
+
+state = rospy.Subscriber("clover0/mavros/state", State, state_cb, queue_size=10)   
+local_pos_pub = rospy.Publisher("clover0/mavros/setpoint_position/local", PoseStamped, queue_size=10)
+arming_client = rospy.ServiceProxy("clover0/mavros/cmd/arming", CommandBool)
+set_mode_client = rospy.ServiceProxy("clover0/mavros/set_mode", SetMode)
+
+
+rate = rospy.Rate(20)
+
+rospy.loginfo("Waiting connected")
+while(not rospy.is_shutdown() and current_state.connected):
+    #rospy.spin()
+    rate.sleep()
+rospy.loginfo("Connected")
+
+
+pose = PoseStamped()
+pose.pose.position.x = 0
+pose.pose.position.y = 0
+pose.pose.position.z = 2
+
+rospy.loginfo("Publishing first pose")
+for i in range(0,50):
+    local_pos_pub.publish(pose)
+    # rospy.spin()
+    rate.sleep()
+rospy.loginfo("Published")
+
+last_request = time.time()
+first_request = time.time()
+
+rospy.loginfo("Changing mode to OFFBOARD")
+#mode_sent = SetModeRequest(None,"OFFBOARD")
+mode_sent = set_mode_client.call(SetModeRequest(None,"OFFBOARD"))
+print("OFFBOARD FOI")
+print(mode_sent)
+rospy.loginfo("Arming")
+sucess = arming_client.call(True)
+
+#print(mode_sent)
+
+while(not rospy.is_shutdown()):
+    if (current_state.mode != "OFFBOARD" and (time.time() - last_request > 5)):
+         rospy.loginfo("Changing mode to OFFBOARD")
+         mode_sent = set_mode_client.call(SetModeRequest(None,"OFFBOARD"))
+
+         if(mode_sent):
+             rospy.loginfo("Offboard enabled")
+           
+         last_request = time.time()
+    elif (not current_state.armed and (time.time() - last_request > 5)):
+         rospy.loginfo("Arming")
+         sucess = arming_client.call(True)
+         if(sucess):
+             rospy.loginfo("Vehicle armed")
+    
+         last_request = time.time()
+    
+    local_pos_pub.publish(pose)        
+
+    #rospy.spin()
+    rate.sleep()

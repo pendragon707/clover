@@ -26,15 +26,13 @@
     <arg name="vehicle" default="clover"/>
     <env name="PX4_SIM_MODEL" value="$(arg vehicle)" />
     <env name="PX4_ESTIMATOR" value="$(arg est)" />
-    <!-- <env name="PX4_SIM_HOST_ADDR" value="$(arg simulator_ip)"/> -->
 
     <!-- Gazebo -->
     <arg name="mavlink_tcp_port" value="$(eval 4560 + arg('ID'))"/>
 
     <!-- MAVROS -->
-    <arg name="remote" value="$(eval 14800 + arg('ID'))"/>
-    <arg name="local" value="$(eval 15000 + arg('ID'))"/>
-    <arg name="fcu_url" default="udp://:$(arg remote)@localhost:$(arg local)"/>
+    <arg name="local" value="$(eval 14580 + arg('ID'))"/>
+    <arg name="fcu_url" default="udp://:$(arg local)@"/>
 
     <!-- PX4 configs -->
     <arg name="daemon" default="true"/>
@@ -64,14 +62,13 @@
 
         <!-- PX4 SITL -->
         <arg unless="$(arg daemon)" name="px4_command_arg1" value=""/>
-        <arg     if="$(arg daemon)" name="px4_command_arg1" value="-d"/>
-        <!-- <node name="sitl_$(arg ID)" pkg="px4" type="px4" output="$(arg output)" args="$(find px4)/ROMFS/px4fmu_common -s etc/init.d-posix/rcS -i $(arg ID)">
-            <env name="PX4_SIM_MODEL" value="$(arg vehicle)"/>
-            <env name="PX4_ESTIMATOR" value="$(arg est)"/>
-        </node> -->
+        <arg if="$(arg daemon)" name="px4_command_arg1" value="-d"/>
+
+
         <node name="sitl_$(arg ID)" pkg="px4" type="px4" output="screen" required="true" args="$(find px4)/ROMFS/px4fmu_common -s etc/init.d-posix/rcS -i $(arg ID)" unless="$(eval type == 'none')">
             <env name="PX4_SIM_MODEL" value="$(arg vehicle)"/>
-            <env name="PX4_ESTIMATOR" value="$(arg est)"/>
+            <env name="PX4_ESTIMATOR" value="$(arg est)"/>       
+            <env name="PX4_SIM_UDP_PRT" value="$(eval 14580 + arg('ID'))"/>     
         </node>
 
         <!-- spawn vehicle -->
@@ -85,10 +82,11 @@
             <param name="target_component_id" value="1"/>
             <param name="gcs_quiet_mode" value="true"/>
             <param name="conn/timeout" value="20"/>
+            <param name="conn/heartbeat_rate" value="1.0"/>
 
-            <param name="local_position/child_frame_id" value="base_link$(arg ID)"/>
+            <!-- <param name="local_position/child_frame_id" value="base_link$(arg ID)"/> -->
             <param name="local_position/tf/child_frame_id" value="base_link$(arg ID)"/>
-            <param name="global_position/child_frame_id" value="base_link$(arg ID)"/>
+            <!-- <param name="global_position/child_frame_id" value="base_link$(arg ID)"/> -->
             <param name="global_position/tf/child_frame_id" value="base_link$(arg ID)"/>
             <!-- <param name="setpoint_position/tf/child_frame_id" value="base_link$(arg ID)"/> -->
             <!-- <param name="fake_gps/tf/child_frame_id" value="base_link$(arg ID)"/> -->

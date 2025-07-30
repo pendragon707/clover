@@ -13,7 +13,7 @@
     <arg name="ID" default="0"/>
     
     <arg name="local" value="$(eval 921600 + arg('ID'))" if="$(eval fcu_conn is None or fcu_conn == 'uart')"/>    
-    <arg name="local" value="$(eval 14557 + arg('ID'))" if="$(eval fcu_conn == 'udp')"/>
+    <arg name="local" value="$(eval 14580 + arg('ID'))" if="$(eval fcu_conn == 'udp')"/>
     <arg name="local" value="$(eval 14580 + arg('ID'))" if="$(eval fcu_conn == 'sitl')"/>
     <arg name="local" value="$(eval 14540 + arg('ID'))" if="$(eval fcu_conn == 'hitl')"/>
 
